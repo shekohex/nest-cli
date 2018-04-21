@@ -9,6 +9,7 @@
     "nest": "bin/nest.js"
   },
   "scripts": {
+    "build": "tsc",
     "start": "node bin/nest.js"
   },
   "repository": {
@@ -30,5 +31,8 @@
     "inquirer": "^5.2.0",
     "os-name": "^2.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^9.6.6",
+    "typescript": "^2.8.3"
+  }
 }
