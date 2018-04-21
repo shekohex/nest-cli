@@ -4,6 +4,7 @@ import { PackageManager } from "./package-manager";
 import { NpmPackageManager } from "./npm.package-manager";
 import { YarnPackageManager } from "./yarn.package-manager";
 import { readdir } from "fs";
+import chalk from "chalk";
 
 export abstract class AbstractPackageManager {
   constructor(private runner: AbstractRunner, protected logger: any) {}
@@ -11,7 +12,14 @@ export abstract class AbstractPackageManager {
   public async install(directory: string): Promise<void> {
     const command = 'install --silent';
     const collect = false;
-    await this.runner.run(command, collect, join(process.cwd(), directory));
+    try {
+      this.logger.info(chalk.green(`Installing packages for tooling via ${ this.name }`));
+      await this.runner.run(command, collect, join(process.cwd(), directory));
+      this.logger.info(chalk.green(`Installed packages for tooling via ${ this.name }`));
+    } catch (error) {
+      const message = 'Package install failed, see above.';
+      this.logger.error(chalk.red(message));
+    }
   }
 
   public async version(): Promise<string> {
